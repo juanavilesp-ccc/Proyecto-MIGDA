@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MIGDA · Equipo</title>
+  <style>
+    :root {
+      --azul: #0A1E4A; --azul2: #153A7A; --acento: #3B82F6; --acento2: #60A5FA;
+      --ok: #10B981; --bg: #0B1220; --card: #111B2E; --card2: #16233A;
+      --texto: #E8EEF7; --muted: #94A3B8; --borde: #243049;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg); color: var(--texto); line-height: 1.45; min-height: 100vh;
+    }
+    a { color: var(--acento2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .hero {
+      background: radial-gradient(ellipse at 30% 0%, #1E3A6E 0%, var(--bg) 55%);
+      padding: 2.2rem 1.25rem 1.8rem; text-align: center;
+      border-bottom: 1px solid var(--borde);
+    }
+    .hero .pill {
+      display: inline-block; font-size: 0.7rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--acento2);
+      border: 1px solid #2A4A7A; padding: 0.3rem 0.75rem;
+      border-radius: 999px; margin-bottom: 0.85rem;
+    }
+    .hero h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin-bottom: 0.35rem; }
+    .hero h1 span { color: var(--acento2); }
+    .hero p { color: var(--muted); font-size: 0.92rem; }
+    .back {
+      display: inline-block; margin-top: 1rem; background: var(--acento); color: #fff !important;
+      text-decoration: none !important; padding: 0.5rem 1.1rem; border-radius: 999px;
+      font-size: 0.85rem; font-weight: 600;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 1.35rem 1rem 3rem; }
+    .grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem;
+    }
+    @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card); border: 1px solid var(--borde); border-radius: 14px;
+      padding: 1.1rem 1rem; cursor: pointer; transition: border-color 0.15s, transform 0.15s;
+      text-align: left;
+    }
+    .card:hover, .card.active { border-color: var(--acento); transform: translateY(-2px); }
+    .card .ini {
+      width: 42px; height: 42px; border-radius: 12px; background: var(--azul2);
+      color: #fff; font-weight: 800; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 0.65rem;
+    }
+    .card h3 { font-size: 0.95rem; color: #fff; margin-bottom: 0.2rem; }
+    .card .role { font-size: 0.78rem; color: var(--acento2); margin-bottom: 0.45rem; }
+    .card .tag {
+      display: inline-block; font-size: 0.68rem; color: var(--muted);
+      background: var(--card2); border: 1px solid var(--borde);
+      padding: 0.15rem 0.45rem; border-radius: 6px;
+    }
+    .panel {
+      display: none; margin-top: 1rem; background: var(--card);
+      border: 1px solid var(--borde); border-radius: 14px; padding: 1.2rem 1.3rem;
+      animation: fade 0.25s ease;
+    }
+    .panel.show { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .panel h2 { font-size: 1.05rem; color: #fff; margin-bottom: 0.25rem; }
+    .panel .sub { font-size: 0.85rem; color: var(--acento2); margin-bottom: 0.85rem; }
+    .panel ul { list-style: none; }
+    .panel li {
+      font-size: 0.9rem; color: var(--muted); padding: 0.4rem 0 0.4rem 1.15rem;
+      position: relative; border-bottom: 1px solid var(--borde);
+    }
+    .panel li:last-child { border-bottom: 0; }
+    .panel li::before {
+      content: ""; position: absolute; left: 0; top: 0.75rem;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--ok);
+    }
+    .groups {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.1rem;
+    }
+    @media (max-width: 600px) { .groups { grid-template-columns: 1fr; } }
+    .gbox {
+      background: var(--card2); border: 1px solid var(--borde); border-radius: 12px;
+      padding: 0.9rem 1rem; font-size: 0.85rem; color: var(--muted);
+    }
+    .gbox strong { display: block; color: #fff; margin-bottom: 0.35rem; font-size: 0.9rem; }
+    footer {
+      text-align: center; padding: 1.25rem 1rem 2rem; color: var(--muted);
+      font-size: 0.78rem; border-top: 1px solid var(--borde);
+    }
+    footer strong { color: #fff; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="pill">Proyecto MIGDA · Fundación Zoraida</div>
+    <h1>Equipo del <span>proyecto</span></h1>
+    <p>Roles, responsabilidades y tareas realizadas</p>
+    <a class="back" href="index.html">← Volver al avance</a>
+  </header>
+
+  <div class="wrap">
+    <div class="groups">
+      <div class="gbox">
+        <strong>Bases de datos y BI</strong>
+        Juan José Avilés · Juan David Álvarez · Daniel Beltrán<br/>
+        Organización de la carpeta, registro de cambios, Power BI y video de la presentación final.
+      </div>
+      <div class="gbox">
+        <strong>Gestión del conocimiento</strong>
+        Sara Martínez · Laura Moreno · Luisa Moreno<br/>
+        Organización de la carpeta y elaboración de la presentación final ante jurado.
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">
+      Clic en cada persona para ver sus tareas.
+    </p>
+
+    <div class="grid" id="cards"></div>
+    <div class="panel" id="panel"></div>
+  </div>
+
+  <footer>
+    <p><strong>Proyecto MIGDA</strong> · Técnico Laboral en Procesamiento de Datos</p>
+    <p style="margin-top:0.35rem;"><a href="index.html">Avance del proyecto</a> ·
+       <a href="Manual%20ilustrativo%20de%20Usuario%20MIGDA.html">Manual de usuario</a></p>
+  </footer>
+
+  <script>
+    const people = [
+      {
+        id: "jj", ini: "JJ", name: "Juan José Avilés Pedraza",
+        role: "Bases de datos y BI · Documentación y tablero",
+        tag: "BD y BI",
+        tasks: [
+          "Organización de la carpeta Bases de datos y BI (estructura 01–05).",
+          "Inventario y clasificación de archivos en el registro de cambios.",
+          "Preparación del Excel limpio para Power BI (columnas, estados SI/VACIA).",
+          "Construcción y ajuste del tablero Power BI de seguimiento (totales e interactividad).",
+          "Versión demo del tablero con datos simulados para la presentación pública.",
+          "Página HTML de avance del proyecto y conexión con el manual.",
+          "Apoyo en video de la presentación final y documentación de cierre."
+        ]
+      },
+      {
+        id: "jd", ini: "JD", name: "Juan David Álvarez",
+        role: "Bases de datos y BI · Organización y registro",
+        tag: "BD y BI",
+        tasks: [
+          "Organización de la carpeta Bases de datos y BI junto al subequipo.",
+          "Clasificación de archivos en documentos, fuentes crudas, limpios, scripts y tableros.",
+          "Registro de movimientos (ruta original, destino, estado, subdirectorio).",
+          "Revisión de consistencia del inventario y apoyo al tablero de seguimiento.",
+          "Participación en el video de la presentación final.",
+          "Ajustes de entregables según retroalimentación del referente y la docente."
+        ]
+      },
+      {
+        id: "de", ini: "DE", name: "Daniel Eduardo Beltrán",
+        role: "Bases de datos y BI · Coordinación y video",
+        tag: "BD y BI",
+        tasks: [
+          "Organización de la carpeta Bases de datos y BI con el subequipo.",
+          "Apoyo en el registro de cambios y validación de rutas/estados.",
+          "Coordinación del video para la presentación final.",
+          "Comunicación con el referente institucional en reuniones de avance.",
+          "Revisión de alcance (qué incluye / no incluye el proyecto).",
+          "Apoyo en manuales y materiales de entrega al cierre."
+        ]
+      },
+      {
+        id: "sm", ini: "SM", name: "Sara Martínez",
+        role: "Gestión del conocimiento · Presentación final",
+        tag: "Gestión conoc.",
+        tasks: [
+          "Organización de la carpeta Gestión del conocimiento.",
+          "Clasificación de archivos según la estructura de repositorios.",
+          "Registro de movimientos correspondientes a esa carpeta.",
+          "Liderazgo y armado de la presentación final ante jurado.",
+          "Alineación del discurso con el producto entregado (estructura, registro, límites).",
+          "Preparación del simulacro y ajustes de diapositivas."
+        ]
+      },
+      {
+        id: "lm", ini: "LM", name: "Laura Moreno",
+        role: "Gestión del conocimiento · Presentación final",
+        tag: "Gestión conoc.",
+        tasks: [
+          "Organización de la carpeta Gestión del conocimiento.",
+          "Apoyo en inventario y clasificación de archivos de esa carpeta.",
+          "Registro de cambios asociado a Gestión del conocimiento.",
+          "Elaboración conjunta de la presentación final.",
+          "Revisión de claridad del mensaje (problema, solución, evidencia).",
+          "Participación en el simulacro de exposición."
+        ]
+      },
+      {
+        id: "lum", ini: "LuM", name: "Luisa Moreno",
+        role: "Gestión del conocimiento · Presentación final",
+        tag: "Gestión conoc.",
+        tasks: [
+          "Organización de la carpeta Gestión del conocimiento.",
+          "Clasificación y apoyo al registro de archivos de esa carpeta.",
+          "Trabajo en la presentación final del proyecto.",
+          "Ajustes de contenido visual e ilustrativo de la exposición.",
+          "Revisión de coherencia con manuales y página de avance.",
+          "Participación en el simulacro de la presentación."
+        ]
+      }
+    ];
+
+    const cards = document.getElementById("cards");
+    const panel = document.getElementById("panel");
+
+    people.forEach(p => {
+      const el = document.createElement("button");
+      el.type = "button";
+      el.className = "card";
+      el.dataset.id = p.id;
+      el.innerHTML = `
+        <div class="ini">${p.ini}</div>
+        <h3>${p.name}</h3>
+        <div class="role">${p.role}</div>
+        <span class="tag">${p.tag}</span>
+      `;
+      el.addEventListener("click", () => show(p.id));
+      cards.appendChild(el);
+    });
+
+    function show(id) {
+      const p = people.find(x => x.id === id);
+      document.querySelectorAll(".card").forEach(c => c.classList.toggle("active", c.dataset.id === id));
+      panel.className = "panel show";
+      panel.innerHTML = `
+        <h2>${p.name}</h2>
+        <div class="sub">${p.role}</div>
+        <ul>${p.tasks.map(t => `<li>${t}</li>`).join("")}</ul>
+      `;
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  </script>
+</body>
+</html>
