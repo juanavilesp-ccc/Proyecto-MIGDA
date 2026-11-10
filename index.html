@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MIGDA · Avance del proyecto</title>
+  <style>
+    :root {
+      --azul: #0A1E4A;
+      --azul2: #153A7A;
+      --acento: #3B82F6;
+      --acento2: #60A5FA;
+      --ok: #10B981;
+      --amber: #F59E0B;
+      --bg: #0B1220;
+      --card: #111B2E;
+      --card2: #16233A;
+      --texto: #E8EEF7;
+      --muted: #94A3B8;
+      --borde: #243049;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--texto);
+      line-height: 1.45;
+      min-height: 100vh;
+    }
+    a { color: var(--acento2); }
+    .hero {
+      background: radial-gradient(ellipse at 30% 0%, #1E3A6E 0%, var(--bg) 55%);
+      padding: 2.5rem 1.25rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--borde);
+    }
+    .hero .pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acento2);
+      border: 1px solid #2A4A7A;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.75rem, 5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .hero h1 span { color: var(--acento2); }
+    .hero p { color: var(--muted); max-width: 28rem; margin: 0 auto; font-size: 0.95rem; }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+
+    /* KPI big numbers */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin: -1.5rem auto 1.5rem;
+      max-width: 980px;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, 1fr); margin-top: -0.5rem; } }
+    .kpi {
+      background: linear-gradient(160deg, var(--card2), var(--card));
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 1.1rem 0.75rem;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+      cursor: default;
+    }
+    .kpi:hover { transform: translateY(-3px); border-color: var(--acento); }
+    .kpi .num {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .kpi .num.accent { color: var(--acento2); }
+    .kpi .num.ok { color: var(--ok); }
+    .kpi .lbl {
+      margin-top: 0.4rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 1.25rem 1.3rem;
+      margin-bottom: 1rem;
+    }
+    section h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    section h2 .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--acento);
+      flex-shrink: 0;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .tabs button {
+      background: var(--card2);
+      border: 1px solid var(--borde);
+      color: var(--muted);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tabs button:hover { color: #fff; border-color: #3A5070; }
+    .tabs button.active {
+      background: var(--acento);
+      border-color: var(--acento);
+      color: #fff;
+      font-weight: 600;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; animation: fade 0.25s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .chip {
+      background: var(--card2);
+      border: 1px solid var(--borde);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.85rem;
+      flex: 1 1 140px;
+    }
+    .chip strong { display: block; color: var(--acento2); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.2rem; }
+
+    .progress-item { margin-bottom: 0.75rem; }
+    .progress-item .top {
+      display: flex; justify-content: space-between;
+      font-size: 0.82rem; margin-bottom: 0.3rem;
+    }
+    .progress-item .top b { color: var(--ok); }
+    .bar {
+      height: 12px; background: #1A2740; border-radius: 8px; overflow: hidden;
+    }
+    .bar i {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, #1D4ED8, var(--acento2));
+      border-radius: 8px;
+      transition: width 1.2s ease;
+      width: 0;
+    }
+    .bar.ok i { background: linear-gradient(90deg, #059669, var(--ok)); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    @media (max-width: 600px) { .split { grid-template-columns: 1fr; } }
+    .box {
+      background: var(--card2);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--borde);
+    }
+    .box h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .box.yes h3 { color: var(--ok); }
+    .box.no h3 { color: #F87171; }
+    .box ul { list-style: none; font-size: 0.85rem; color: var(--muted); }
+    .box li { padding: 0.25rem 0 0.25rem 0.9rem; position: relative; }
+    .box li::before {
+      content: "";
+      position: absolute; left: 0; top: 0.55rem;
+      width: 5px; height: 5px; border-radius: 50%;
+    }
+    .box.yes li::before { background: var(--ok); }
+    .box.no li::before { background: #F87171; }
+
+    .embed-wrap {
+      background: #0A1020;
+      border: 1px dashed #3A5070;
+      border-radius: 12px;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+    .embed-wrap iframe {
+      width: 100%;
+      height: 420px;
+      border: 0;
+      display: block;
+    }
+    .embed-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1.5rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .embed-placeholder code {
+      display: block;
+      margin-top: 0.75rem;
+      background: #1A2740;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      color: var(--acento2);
+      word-break: break-all;
+      max-width: 100%;
+    }
+    .embed-wrap.has-src .embed-placeholder { display: none; }
+
+    .filters {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-bottom: 0.85rem;
+    }
+    .filters button {
+      background: transparent;
+      border: 1px solid var(--borde);
+      color: var(--muted);
+      padding: 0.35rem 0.7rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .filters button.active, .filters button:hover {
+      background: var(--acento);
+      border-color: var(--acento);
+      color: #fff;
+    }
+    .domain-bars { display: flex; flex-direction: column; gap: 0.45rem; }
+    .domain-row { display: grid; grid-template-columns: 110px 1fr 40px; gap: 0.5rem; align-items: center; font-size: 0.8rem; }
+    .domain-row .name { color: var(--muted); text-align: right; }
+    .domain-row .track { height: 8px; background: #1A2740; border-radius: 4px; overflow: hidden; }
+    .domain-row .track i {
+      display: block; height: 100%;
+      background: var(--acento);
+      border-radius: 4px;
+      width: 0;
+      transition: width 0.9s ease;
+    }
+    .domain-row .val { color: #fff; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem 2.5rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      border-top: 1px solid var(--borde);
+    }
+    footer strong { color: #fff; }
+
+    .nav-dots {
+      position: fixed; right: 12px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 8px; z-index: 10;
+    }
+    @media (max-width: 900px) { .nav-dots { display: none; } }
+    .nav-dots a {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #2A3A55; display: block;
+    }
+    .nav-dots a:hover, .nav-dots a.on { background: var(--acento2); }
+  </style>
+</head>
+<body>
+
+  <div class="nav-dots" aria-hidden="true">
+    <a href="#top" class="on" title="Inicio"></a>
+    <a href="#producto" title="Producto"></a>
+    <a href="#fases" title="Fases"></a>
+    <a href="#tablero" title="Tablero"></a>
+    <a href="#alcance" title="Alcance"></a>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="pill">Proyecto MIGDA · Fundación Zoraida</div>
+    <h1>Repositorios <span>ordenados</span> y trazables</h1>
+    <p>Avance del proyecto · Dos carpetas priorizadas · Estructura, registro y seguimiento</p>
+  </header>
+
+  <div class="kpis" id="kpis">
+    <div class="kpi">
+      <div class="num accent" data-target="705">0</div>
+      <div class="lbl">Archivos en registro</div>
+    </div>
+    <div class="kpi">
+      <div class="num ok" data-target="692">0</div>
+      <div class="lbl">Ya reorganizados</div>
+    </div>
+    <div class="kpi">
+      <div class="num accent" data-target="98" data-suffix="%">0</div>
+      <div class="lbl">Avance</div>
+    </div>
+    <div class="kpi">
+      <div class="num" data-target="5">0</div>
+      <div class="lbl">Carpetas del modelo</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <section id="producto">
+      <h2><span class="dot"></span> Qué se entregó</h2>
+      <div class="tabs" role="tablist">
+        <button type="button" class="active" data-tab="t1">Estructura</button>
+        <button type="button" data-tab="t2">Registro</button>
+        <button type="button" data-tab="t3">Tablero</button>
+        <button type="button" data-tab="t4">Manuales</button>
+      </div>
+      <div id="t1" class="panel active">
+        <div class="chips">
+          <div class="chip"><strong>01</strong> Documentos</div>
+          <div class="chip"><strong>02</strong> Fuentes crudas</div>
+          <div class="chip"><strong>03</strong> Bases limpias</div>
+          <div class="chip"><strong>04</strong> Análisis y scripts</div>
+          <div class="chip"><strong>05</strong> Tableros</div>
+        </div>
+        <p style="margin-top:0.85rem;font-size:0.85rem;color:var(--muted);">
+          Modelo estable: cinco carpetas. Lo pendiente de clasificar no forma parte permanente del diseño.
+        </p>
+      </div>
+      <div id="t2" class="panel">
+        <p style="font-size:0.9rem;color:var(--muted);">
+          Excel de trazabilidad: ruta original, destino, estado (SI / VACIA) y dominio.
+          Fuente del tablero de seguimiento. Se conservó el <strong style="color:#fff;">original sin tocar</strong>.
+        </p>
+      </div>
+      <div id="t3" class="panel">
+        <p style="font-size:0.9rem;color:var(--muted);">
+          Power BI orientado a <strong style="color:#fff;">totales</strong>: cuántos archivos por estado, carpeta, tipo y dominio.
+          No sustituye tableros de indicadores de programas.
+        </p>
+      </div>
+      <div id="t4" class="panel">
+        <p style="font-size:0.9rem;color:var(--muted);">
+          Manual de usuario y manual técnico alineados al alcance real (organización de repositorios + registro + seguimiento).
+        </p>
+      </div>
+    </section>
+
+    <section id="fases">
+      <h2><span class="dot"></span> Avance por fase</h2>
+      <div class="progress-item">
+        <div class="top"><span>Diagnóstico e inventario</span><b>100%</b></div>
+        <div class="bar ok"><i data-w="100"></i></div>
+      </div>
+      <div class="progress-item">
+        <div class="top"><span>Estructura de repositorios</span><b>100%</b></div>
+        <div class="bar ok"><i data-w="100"></i></div>
+      </div>
+      <div class="progress-item">
+        <div class="top"><span>Registro de cambios</span><b>100%</b></div>
+        <div class="bar ok"><i data-w="100"></i></div>
+      </div>
+      <div class="progress-item">
+        <div class="top"><span>Tablero Power BI</span><b>100%</b></div>
+        <div class="bar ok"><i data-w="100"></i></div>
+      </div>
+      <div class="progress-item">
+        <div class="top"><span>Manuales de usuario y técnico</span><b>100%</b></div>
+        <div class="bar ok"><i data-w="100"></i></div>
+      </div>
+      <div class="progress-item">
+        <div class="top"><span>Validación y aceptación</span><b>100%</b></div>
+        <div class="bar ok"><i data-w="100"></i></div>
+      </div>
+    </section>
+
+    <section id="distribucion">
+      <h2><span class="dot"></span> Distribución por dominio (agregado)</h2>
+      <div class="filters" id="filterTipo">
+        <button type="button" class="active" data-filter="all">Todos</button>
+        <button type="button" data-filter="top">Top 5</button>
+      </div>
+      <div class="domain-bars" id="domainBars"></div>
+    </section>
+
+    <section id="tablero">
+      <h2><span class="dot"></span> Tablero de seguimiento (Power BI)</h2>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;">
+        Vista interactiva del registro. Si el enlace de publicación está configurado, el tablero carga abajo.
+      </p>
+      <div class="embed-wrap" id="pbiWrap">
+        <div class="embed-placeholder" id="pbiPlaceholder">
+          <div style="font-size:1.5rem;margin-bottom:0.5rem;">📊</div>
+          <div><strong style="color:#fff;">Conectar Power BI online</strong></div>
+          <div style="margin-top:0.4rem;max-width:24rem;">
+            Publica el informe en Power BI Service → Archivo → Insertar → copiar el enlace de inserción.
+            Luego pégalo en la configuración de esta página (ver instrucciones abajo).
+          </div>
+          <code id="pbiHint">POWER_BI_EMBED_URL</code>
+        </div>
+        <iframe id="pbiFrame" title="Power BI MIGDA" allowfullscreen="true" style="display:none;"></iframe>
+      </div>
+    </section>
+
+    <section id="alcance">
+      <h2><span class="dot"></span> Alcance</h2>
+      <div class="split">
+        <div class="box yes">
+          <h3>Incluye</h3>
+          <ul>
+            <li>Bases de datos y BI + Gestión del conocimiento</li>
+            <li>Estructura, registro y tablero de proceso</li>
+            <li>Nomenclatura como regla recomendada</li>
+            <li>Original sin tocar</li>
+          </ul>
+        </div>
+        <div class="box no">
+          <h3>No incluye</h3>
+          <ul>
+            <li>Software o CRM nuevo</li>
+            <li>Indicadores de programas en producción</li>
+            <li>Renombrado masivo de archivos</li>
+            <li>Gobernanza formal de toda la Fundación</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p><strong>Proyecto MIGDA</strong> · Fundación Zoraida · Dirección de Planeación y Desarrollo</p>
+    <p>Sara Martínez · Juan José Avilés · Juan David Álvarez · Daniel Beltrán · Laura Moreno · Luisa Moreno</p>
+    <p style="margin-top:0.35rem;">Página de avance · Noviembre 2026</p>
+  </footer>
+
+  <script>
+    /* ==== CONFIGURA AQUÍ TU POWER BI ==== */
+    const POWER_BI_EMBED_URL = "https://app.powerbi.com/reportEmbed?reportId=50960bf5-88eb-4699-b070-2ccade64a6f9&autoAuth=true&ctid=81f7f119-7d67-4738-b748-dc0811d44c1f";
+    // Ejemplo:
+    // const POWER_BI_EMBED_URL = "https://app.powerbi.com/view?r=XXXX";
+
+    // Contadores animados
+    function animateNums() {
+      document.querySelectorAll(".kpi .num").forEach(el => {
+        const target = +el.dataset.target;
+        const suffix = el.dataset.suffix || "";
+        const dur = 1100;
+        const t0 = performance.now();
+        function tick(now) {
+          const p = Math.min(1, (now - t0) / dur);
+          const ease = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * ease) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+
+    // Barras de fase
+    function fillBars() {
+      document.querySelectorAll(".bar i").forEach(el => {
+        el.style.width = el.dataset.w + "%";
+      });
+    }
+
+    // Dominios (datos agregados, sin rutas sensibles)
+    const domains = [
+      { name: "Webscraping", n: 173 },
+      { name: "Estudio", n: 105 },
+      { name: "EM", n: 103 },
+      { name: "Informes", n: 102 },
+      { name: "Colegio", n: 50 },
+      { name: "ExpoHorizontes", n: 36 },
+      { name: "ICFES", n: 27 },
+      { name: "Reportes", n: 22 },
+      { name: "Min. Educación", n: 16 },
+      { name: "Planeación", n: 14 },
+      { name: "Encuestas", n: 13 },
+      { name: "GEIH", n: 12 }
+    ];
+    const maxD = Math.max(...domains.map(d => d.n));
+
+    function renderDomains(mode) {
+      const list = mode === "top" ? domains.slice(0, 5) : domains;
+      const root = document.getElementById("domainBars");
+      root.innerHTML = list.map(d => `
+        <div class="domain-row">
+          <div class="name">${d.name}</div>
+          <div class="track"><i data-w="${(d.n / maxD) * 100}"></i></div>
+          <div class="val">${d.n}</div>
+        </div>
+      `).join("");
+      requestAnimationFrame(() => {
+        root.querySelectorAll("i").forEach(el => { el.style.width = el.dataset.w + "%"; });
+      });
+    }
+
+    document.getElementById("filterTipo").addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      document.querySelectorAll("#filterTipo button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderDomains(btn.dataset.filter);
+    });
+
+    // Tabs producto
+    document.querySelectorAll(".tabs button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    // Power BI embed
+    function setupPbi() {
+      const url = (POWER_BI_EMBED_URL || "").trim();
+      const wrap = document.getElementById("pbiWrap");
+      const frame = document.getElementById("pbiFrame");
+      if (url) {
+        frame.src = url;
+        frame.style.display = "block";
+        wrap.classList.add("has-src");
+      }
+    }
+
+    // Nav dots
+    const sections = ["top", "producto", "fases", "tablero", "alcance"];
+    const dots = document.querySelectorAll(".nav-dots a");
+    window.addEventListener("scroll", () => {
+      let idx = 0;
+      sections.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 120) idx = i;
+      });
+      dots.forEach((d, i) => d.classList.toggle("on", i === idx));
+    });
+
+    // Init
+    window.addEventListener("load", () => {
+      animateNums();
+      fillBars();
+      renderDomains("all");
+      setupPbi();
+    });
+  </script>
+</body>
+</html>

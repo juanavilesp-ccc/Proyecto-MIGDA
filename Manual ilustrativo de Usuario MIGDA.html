@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MIGDA · Manual de usuario</title>
+  <style>
+    :root {
+      --azul: #0A1E4A;
+      --azul2: #153A7A;
+      --acento: #3B82F6;
+      --acento2: #60A5FA;
+      --ok: #10B981;
+      --amber: #F59E0B;
+      --rojo: #F87171;
+      --bg: #0B1220;
+      --card: #111B2E;
+      --card2: #16233A;
+      --texto: #E8EEF7;
+      --muted: #94A3B8;
+      --borde: #243049;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--texto);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    a { color: var(--acento2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .hero {
+      background: radial-gradient(ellipse at 30% 0%, #1E3A6E 0%, var(--bg) 55%);
+      padding: 2.5rem 1.25rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--borde);
+    }
+    .hero .pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acento2);
+      border: 1px solid #2A4A7A;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .hero h1 span { color: var(--acento2); }
+    .hero p { color: var(--muted); max-width: 32rem; margin: 0 auto; font-size: 0.95rem; }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+    /* Nav lateral */
+    .nav-dots {
+      position: fixed; right: 14px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 8px; z-index: 20;
+    }
+    @media (max-width: 960px) { .nav-dots { display: none; } }
+    .nav-dots a {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #2A3A55; display: block;
+      transition: background 0.15s;
+    }
+    .nav-dots a:hover, .nav-dots a.on { background: var(--acento2); }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 1.35rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+    section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    section h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 8px;
+      background: var(--acento);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    section h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--acento2);
+      margin: 1rem 0 0.5rem;
+    }
+    p, li { font-size: 0.9rem; color: var(--muted); }
+    p { margin-bottom: 0.7rem; }
+    strong { color: #fff; }
+
+    .callout {
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin: 0.85rem 0;
+      border: 1px solid var(--borde);
+      background: var(--card2);
+    }
+    .callout.blue { border-left: 3px solid var(--acento); }
+    .callout.amber { border-left: 3px solid var(--amber); background: #1A1508; }
+    .callout.green { border-left: 3px solid var(--ok); background: #0C1A14; }
+    .callout .title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+    .callout.blue .title { color: var(--acento2); }
+    .callout.amber .title { color: var(--amber); }
+    .callout.green .title { color: var(--ok); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 600px) { .split { grid-template-columns: 1fr; } }
+    .box {
+      background: var(--card2);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--borde);
+    }
+    .box h3 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 0.5rem;
+    }
+    .box.yes h3 { color: var(--ok); }
+    .box.no h3 { color: var(--rojo); }
+    .box ul { list-style: none; }
+    .box li {
+      padding: 0.28rem 0 0.28rem 0.95rem;
+      position: relative;
+      font-size: 0.84rem;
+    }
+    .box li::before {
+      content: "";
+      position: absolute; left: 0; top: 0.55rem;
+      width: 5px; height: 5px; border-radius: 50%;
+    }
+    .box.yes li::before { background: var(--ok); }
+    .box.no li::before { background: var(--rojo); }
+
+    .folder-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .folder-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--borde);
+    }
+    @media (max-width: 560px) {
+      .folder-row { grid-template-columns: 1fr; }
+    }
+    .folder-row .code {
+      background: var(--azul2);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.75rem 0.9rem;
+      display: flex;
+      align-items: center;
+    }
+    .folder-row.temp .code { background: #7C4A0A; }
+    .folder-row .desc {
+      background: var(--card2);
+      padding: 0.75rem 0.95rem;
+      font-size: 0.84rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+    }
+    .folder-row.temp .desc { color: #FBBF24; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 0.84rem;
+    }
+    th {
+      background: var(--azul2);
+      color: #fff;
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+    td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--borde);
+      color: var(--muted);
+    }
+    tr:nth-child(even) td { background: rgba(22, 35, 58, 0.5); }
+    td strong { color: var(--acento2); }
+
+    .steps { counter-reset: step; margin-top: 0.4rem; }
+    .steps li {
+      list-style: none;
+      counter-increment: step;
+      padding: 0.45rem 0 0.45rem 2.2rem;
+      position: relative;
+      font-size: 0.88rem;
+    }
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0.35rem;
+      width: 1.5rem; height: 1.5rem;
+      border-radius: 8px;
+      background: var(--acento);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .faq-item { margin-bottom: 0.9rem; }
+    .faq-item .q {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+    .faq-item .a { font-size: 0.86rem; color: var(--muted); }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem 2.5rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      border-top: 1px solid var(--borde);
+    }
+    footer strong { color: #fff; }
+
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.2rem;
+    }
+    .toc a {
+      background: var(--card2);
+      border: 1px solid var(--borde);
+      color: var(--muted);
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      transition: all 0.15s;
+    }
+    .toc a:hover {
+      background: var(--acento);
+      border-color: var(--acento);
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-dots" aria-hidden="true">
+    <a href="#top" class="on" title="Inicio"></a>
+    <a href="#presentacion" title="Presentación"></a>
+    <a href="#alcance" title="Alcance"></a>
+    <a href="#guia" title="Guía rápida"></a>
+    <a href="#estructura" title="Estructura"></a>
+    <a href="#nomenclatura" title="Nomenclatura"></a>
+    <a href="#tablero" title="Tablero"></a>
+    <a href="#faq" title="FAQ"></a>
+    <a href="#contacto" title="Contacto"></a>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="pill">Proyecto MIGDA · Fundación Zoraida</div>
+    <h1>Manual de <span>usuario</span></h1>
+    <p>Organización de repositorios · Bases de datos y BI · Gestión del conocimiento</p>
+  </header>
+
+  <div class="wrap">
+
+    <!-- TOC -->
+    <section>
+      <h2><span class="num">0</span> Contenido</h2>
+      <div class="toc">
+        <a href="#presentacion">Presentación</a>
+        <a href="#objetivos">Objetivos</a>
+        <a href="#alcance">Alcance</a>
+        <a href="#guia">Guía rápida</a>
+        <a href="#acceso">Acceso</a>
+        <a href="#estructura">Estructura</a>
+        <a href="#nomenclatura">Nomenclatura</a>
+        <a href="#tablero">Tablero Power BI</a>
+        <a href="#carga">Cargar y consultar</a>
+        <a href="#errores">Errores</a>
+        <a href="#faq">Preguntas frecuentes</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </section>
+
+    <!-- 01 Presentación -->
+    <section id="presentacion">
+      <h2><span class="num">01</span> Presentación</h2>
+      <p>
+        Este manual describe el uso de la estructura de repositorios del proyecto <strong>MIGDA</strong>
+        para las carpetas <strong>Bases de datos y BI</strong> y <strong>Gestión del conocimiento</strong>
+        de la Dirección de Planeación y Desarrollo de la Fundación Zoraida.
+      </p>
+      <p>
+        Antes del proyecto, la información estaba dispersa en Excel, PDF, CSV, scripts en R y Stata,
+        y tableros Power BI, sin una estructura común ni un criterio claro para identificar la versión vigente.
+      </p>
+      <div class="callout blue">
+        <div class="title">Alcance real del proyecto</div>
+        <p style="margin:0;">
+          MIGDA reorganizó dos carpetas prioritarias, documentó los movimientos en un registro de cambios
+          y propuso reglas de nomenclatura. <strong>No</strong> se implementó una plataforma de software
+          ni un sistema de gobernanza de datos de alcance institucional completo.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 Objetivos -->
+    <section id="objetivos">
+      <h2><span class="num">02</span> Objetivos</h2>
+      <h3>Del manual</h3>
+      <ul style="list-style:none;padding:0;">
+        <li style="padding:0.25rem 0 0.25rem 1rem;position:relative;"><span style="position:absolute;left:0;color:var(--acento2);">•</span> Explicar la estructura de carpetas aplicada.</li>
+        <li style="padding:0.25rem 0 0.25rem 1rem;position:relative;"><span style="position:absolute;left:0;color:var(--acento2);">•</span> Indicar cómo ubicar documentos, fuentes crudas, bases limpias, scripts y tableros.</li>
+        <li style="padding:0.25rem 0 0.25rem 1rem;position:relative;"><span style="position:absolute;left:0;color:var(--acento2);">•</span> Orientar sobre nomenclatura y cuidado de la información.</li>
+        <li style="padding:0.25rem 0 0.25rem 1rem;position:relative;"><span style="position:absolute;left:0;color:var(--acento2);">•</span> Servir de referencia para replicar el criterio en otras carpetas, si la Fundación lo decide.</li>
+      </ul>
+      <h3>De la solución</h3>
+      <p>
+        Estandarizar la organización de los archivos de las dos carpetas priorizadas,
+        para encontrar la información con mayor facilidad, distinguir lo crudo de lo validado
+        y dejar trazabilidad de los cambios.
+      </p>
+    </section>
+
+    <!-- 03 Alcance -->
+    <section id="alcance">
+      <h2><span class="num">03</span> Alcance del proyecto</h2>
+      <p style="font-size:0.82rem;font-style:italic;">Acordado con Kevin Alexander López García, referente de la Fundación.</p>
+      <div class="split">
+        <div class="box yes">
+          <h3>Incluye</h3>
+          <ul>
+            <li>Organización de las dos carpetas prioritarias</li>
+            <li>Estructura de subcarpetas 01 a 06</li>
+            <li>Registro de cambios con trazabilidad</li>
+            <li>Tablero Power BI de seguimiento</li>
+            <li>Nomenclatura recomendada y manuales</li>
+          </ul>
+        </div>
+        <div class="box no">
+          <h3>No incluye</h3>
+          <ul>
+            <li>Software, apps o sistemas CRM</li>
+            <li>ETL o automatización institucional</li>
+            <li>Tableros de indicadores de programas</li>
+            <li>Gobernanza formal de toda la Fundación</li>
+            <li>Renombrado masivo de archivos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 Guía rápida -->
+    <section id="guia">
+      <h2><span class="num">04</span> Guía rápida de consulta</h2>
+      <p>¿Dónde busco cada tipo de archivo?</p>
+      <table>
+        <thead>
+          <tr><th>Tipo de necesidad</th><th>Carpeta</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Documentos, diccionarios, diseños, presentaciones, PDF</td><td><strong>01_DOCUMENTOS</strong></td></tr>
+          <tr><td>Bases y archivos originales sin validar</td><td><strong>02_FUENTES_CRUDAS</strong></td></tr>
+          <tr><td>Versiones organizadas o validadas</td><td><strong>03_BASES_LIMPIAS</strong></td></tr>
+          <tr><td>Scripts en R, Stata y código de análisis</td><td><strong>04_ANALISIS_Y_SCRIPTS</strong></td></tr>
+          <tr><td>Archivos Power BI (.pbix)</td><td><strong>05_TABLEROS</strong></td></tr>
+          <tr><td>Pendientes de decisión, muy pesados o sin clasificar</td><td><strong style="color:var(--amber);">06_REVISAR_Y_REPORTAR</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="callout amber">
+        <div class="title">Nota sobre la carpeta 06</div>
+        <p style="margin:0;">
+          Es una <strong>bandeja temporal</strong>. No es una categoría permanente.
+          Cuando se resuelva la ubicación del archivo, muévalo a 01–05 y actualice el registro de cambios.
+        </p>
+      </div>
+    </section>
+
+    <!-- 05 Acceso -->
+    <section id="acceso">
+      <h2><span class="num">05</span> Cómo acceder</h2>
+      <p>No existe una aplicación aparte. El acceso es al repositorio compartido de la Fundación:</p>
+      <ol class="steps">
+        <li>Ingresar con el correo y la contraseña institucionales.</li>
+        <li>Abrir la carpeta del proyecto (Bases de datos y BI o Gestión del conocimiento).</li>
+        <li>Navegar según la estructura 01–06.</li>
+      </ol>
+      <p style="margin-top:0.75rem;font-size:0.82rem;font-style:italic;">
+        Si aparece acceso denegado, contacte al administrador de permisos (sección Contacto).
+      </p>
+    </section>
+
+    <!-- 06 Estructura -->
+    <section id="estructura">
+      <h2><span class="num">06</span> Estructura de repositorios</h2>
+      <p>La interfaz de trabajo es el explorador de archivos de OneDrive o SharePoint.</p>
+      <div class="folder-grid">
+        <div class="folder-row">
+          <div class="code">01_DOCUMENTOS</div>
+          <div class="desc">Diccionarios, manuales, diseños, presentaciones, consentimientos, informes y PDF</div>
+        </div>
+        <div class="folder-row">
+          <div class="code">02_FUENTES_CRUDAS</div>
+          <div class="desc">Bases y archivos originales sin validar como versión de trabajo</div>
+        </div>
+        <div class="folder-row">
+          <div class="code">03_BASES_LIMPIAS</div>
+          <div class="desc">Versiones organizadas o validadas (Formato crudo / Formato final)</div>
+        </div>
+        <div class="folder-row">
+          <div class="code">04_ANALISIS_Y_SCRIPTS</div>
+          <div class="desc">Scripts en R, Stata y código de análisis</div>
+        </div>
+        <div class="folder-row">
+          <div class="code">05_TABLEROS</div>
+          <div class="desc">Archivos Power BI (.pbix)</div>
+        </div>
+        <div class="folder-row temp">
+          <div class="code">06_REVISAR_Y_REPORTAR</div>
+          <div class="desc">Bandeja temporal · pendientes de decisión o de gran tamaño</div>
+        </div>
+      </div>
+      <div class="callout green" style="margin-top:1rem;">
+        <div class="title">Original sin tocar</div>
+        <p style="margin:0;">
+          Se conservó la carpeta original sin modificar. Permite auditar la transformación
+          y fue valorado de forma explícita por la Fundación.
+        </p>
+      </div>
+    </section>
+
+    <!-- 07 Nomenclatura -->
+    <section id="nomenclatura">
+      <h2><span class="num">07</span> Nomenclatura recomendada</h2>
+      <p>Patrón sugerido: <strong>Dominio_Periodo_Tipo_Version</strong></p>
+      <table>
+        <thead>
+          <tr><th>Antes</th><th>Después (recomendado)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Base 2025 Resultados.xlsx</td><td><strong>Resultados_2025_BaseLimpia_v1.xlsx</strong></td></tr>
+          <tr><td>Modelo Proyección V3.xlsx</td><td><strong>Colegio_2025_ProyeccionCupos_v3.xlsx</strong></td></tr>
+          <tr><td>diccionario EM 2021.xlsx</td><td><strong>EM_2021_Diccionario_v1.xlsx</strong></td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:0.75rem;color:var(--amber);font-size:0.84rem;">
+        Se desaconseja: “copia”, “final_final”, “versión nueva” sin número de versión.
+      </p>
+    </section>
+
+    <!-- 08 Tablero -->
+    <section id="tablero">
+      <h2><span class="num">08</span> Tablero de seguimiento (Power BI)</h2>
+      <p>
+        Visualiza el avance de la reorganización: totales de archivos, movidos, pendientes
+        y su distribución. <strong style="color:var(--amber);">No es un tablero de indicadores de programas, Saber 11 o GEIH.</strong>
+      </p>
+      <h3>Cómo acceder</h3>
+      <ol class="steps">
+        <li>Abrir Power BI Desktop.</li>
+        <li>Conectar el Excel del registro de cambios.</li>
+        <li>Abrir el archivo .pbix del proyecto.</li>
+        <li>Actualizar el modelo si está vinculado al Excel.</li>
+      </ol>
+      <div class="callout amber">
+        <div class="title">Limitación documentada</div>
+        <p style="margin:0;">
+          La conexión anónima a OneDrive personal resultó inestable.
+          Para la entrega se usa el archivo Excel local. Guarde el Excel del registro antes de refrescar el modelo.
+        </p>
+      </div>
+      <h3>Qué se puede consultar</h3>
+      <ul style="list-style:none;padding:0;">
+        <li style="padding:0.2rem 0 0.2rem 1rem;position:relative;"><span style="position:absolute;left:0;color:var(--acento2);">•</span> Total de archivos y porcentaje de avance</li>
+        <li style="padding:0.2rem 0 0.2rem 1rem;position:relative;"><span style="position:absolute;left:0;color:var(--acento2);">•</span> Distribución por estado (SI / NO EXISTE / PENDIENTE)</li>
+        <li style="padding:0.2rem 0 0.2rem 1rem;position:relative;"><span style="position:absolute;left:0;color:var(--acento2);">•</span> Distribución por carpeta destino (01 a 06) y por dominio</li>
+      </ul>
+    </section>
+
+    <!-- 09 Carga -->
+    <section id="carga">
+      <h2><span class="num">09</span> Cargar y consultar información</h2>
+      <h3>Para incorporar un archivo nuevo</h3>
+      <ol class="steps">
+        <li>Nombrar con el patrón Dominio_Periodo_Tipo_Version.</li>
+        <li>Ubicar en 01 (documentos), 02 (crudas) o 03 (limpias).</li>
+        <li>Registrar el movimiento en el Excel del registro de cambios.</li>
+      </ol>
+      <h3>Para consultar</h3>
+      <p>
+        Identifique el tipo de archivo → vaya a la carpeta 01–05.
+        Si no conoce la ubicación, filtre el registro de cambios por dominio o estado.
+      </p>
+    </section>
+
+    <!-- 10 Errores -->
+    <section id="errores">
+      <h2><span class="num">10</span> Errores frecuentes y solución</h2>
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>Causa probable</th><th>Qué hacer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Archivo no encontrado</td><td>Cambio de ruta o nombre</td><td>Consultar el registro de cambios</td></tr>
+          <tr><td>Cifras distintas mismo periodo</td><td>Versiones duplicadas</td><td>Preferir 03_BASES_LIMPIAS</td></tr>
+          <tr><td>Acceso denegado</td><td>Permisos o sesión expirada</td><td>Reautenticarse; contactar a Kevin López</td></tr>
+          <tr><td>Power BI sin datos nuevos</td><td>Excel no guardado</td><td>Guardar el registro y refrescar</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 11 FAQ -->
+    <section id="faq">
+      <h2><span class="num">11</span> Preguntas frecuentes</h2>
+      <div class="faq-item">
+        <div class="q">¿Dónde está la información reorganizada?</div>
+        <div class="a">En las subcarpetas 01 a 06 de Bases de datos y BI y de Gestión del conocimiento.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">¿Puedo usar un archivo llamado “copia” o “final_final”?</div>
+        <div class="a">No como referencia principal. Busque la versión según la estructura y el registro de cambios.</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">¿El Power BI muestra indicadores de Saber 11 o GEIH?</div>
+        <div class="a">No. Solo el avance de la reorganización de archivos (cuántos movidos, por carpeta y dominio).</div>
+      </div>
+      <div class="faq-item">
+        <div class="q">¿La estructura ya está en toda la Fundación?</div>
+        <div class="a">No. Solo en las dos carpetas priorizadas. Ampliarla es decisión de la Dirección de Planeación.</div>
+      </div>
+    </section>
+
+    <!-- 12 Contacto -->
+    <section id="contacto">
+      <h2><span class="num">12</span> Contacto y soporte</h2>
+      <table>
+        <thead>
+          <tr><th>Quién</th><th>Nombre</th><th>Correo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Referente Fundación</td>
+            <td>Kevin Alexander López García</td>
+            <td><a href="mailto:klopez@fundacionzoraida.org">klopez@fundacionzoraida.org</a></td>
+          </tr>
+          <tr>
+            <td>Proyecto MIGDA</td>
+            <td>Daniel Eduardo Beltrán Martínez</td>
+            <td><a href="mailto:daniel.beltranma@tecalianza.edu.co">daniel.beltranma@tecalianza.edu.co</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:0.9rem;font-size:0.82rem;">
+        Horario de referencia: lunes a viernes, 7:00 a. m. a 2:00 p. m.
+        Al cerrar el proyecto, la administración de las carpetas queda a cargo de la
+        Dirección de Planeación de la Fundación Zoraida.
+      </p>
+    </section>
+
+  </div>
+
+  <footer>
+    <p><strong>Proyecto MIGDA</strong> · Fundación Zoraida · Dirección de Planeación y Desarrollo</p>
+    <p>Sara Martínez · Juan José Avilés · Juan David Álvarez · Daniel Beltrán · Laura Moreno · Luisa Moreno</p>
+    <p style="margin-top:0.35rem;">Manual de usuario · Versión visual · Noviembre 2026</p>
+  </footer>
+
+  <script>
+    const sections = ["top","presentacion","alcance","guia","estructura","nomenclatura","tablero","faq","contacto"];
+    const dots = document.querySelectorAll(".nav-dots a");
+    window.addEventListener("scroll", () => {
+      let idx = 0;
+      sections.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 140) idx = i;
+      });
+      dots.forEach((d, i) => d.classList.toggle("on", i === idx));
+    });
+  </script>
+</body>
+</html>
