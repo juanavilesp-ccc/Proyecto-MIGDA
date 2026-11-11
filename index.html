@@ -321,11 +321,11 @@
 
   <div class="kpis" id="kpis">
     <div class="kpi">
-      <div class="num accent" data-target="705">0</div>
+      <div class="num accent" data-target="420">0</div>
       <div class="lbl">Archivos en registro</div>
     </div>
     <div class="kpi">
-      <div class="num ok" data-target="692">0</div>
+      <div class="num ok" data-target="420">0</div>
       <div class="lbl">Ya reorganizados</div>
     </div>
     <div class="kpi">
@@ -476,7 +476,7 @@
     /* ==== CONFIGURA AQUÍ TU POWER BI ==== */
     const POWER_BI_EMBED_URL = "https://app.powerbi.com/reportEmbed?reportId=d4af1fba-eb0a-4c68-8d00-e1e933cf05f7&autoAuth=true&ctid=81f7f119-7d67-4738-b748-dc0811d44c1f";
     // Ejemplo:
-    // const POWER_BI_EMBED_URL = "https://app.powerbi.com/view?r=XXXX";
+    // const POWER_BI_EMBED_URL = "https://app.powerbi.com/reportEmbed?reportId=d4af1fba-eb0a-4c68-8d00-e1e933cf05f7&autoAuth=true&ctid=81f7f119-7d67-4738-b748-dc0811d44c1f";
 
     // Contadores animados
     function animateNums() {
@@ -504,18 +504,18 @@
 
     // Dominios (datos agregados, sin rutas sensibles)
     const domains = [
-      { name: "Webscraping", n: 173 },
-      { name: "Estudio", n: 105 },
-      { name: "EM", n: 103 },
-      { name: "Informes", n: 102 },
-      { name: "Colegio", n: 50 },
-      { name: "ExpoHorizontes", n: 36 },
-      { name: "ICFES", n: 27 },
-      { name: "Reportes", n: 22 },
-      { name: "Min. Educación", n: 16 },
-      { name: "Planeación", n: 14 },
-      { name: "Encuestas", n: 13 },
-      { name: "GEIH", n: 12 }
+      { name: "Academia Norte", n: 85 },
+      { name: "Programa Jóvenes", n: 72 },
+      { name: "Laboratorio datos", n: 58 },
+      { name: "Encuestas internas", n: 45 },
+      { name: "Convenios", n: 38 },
+      { name: "Biblioteca digital", n: 32 },
+      { name: "Talento humano", n: 28 },
+      { name: "Presupuesto", n: 24 },
+      { name: "Comunicaciones", n: 20 },
+      { name: "Evaluación", n: 18 },
+      { name: "Archivo histórico", n: 15 },
+      { name: "Proyectos piloto", n: 12 }
     ];
     const maxD = Math.max(...domains.map(d => d.n));
 
